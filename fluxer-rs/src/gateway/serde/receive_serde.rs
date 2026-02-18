@@ -1,6 +1,10 @@
+use log::info;
 use serde::{Deserialize, Serialize, de};
 use serde_json::Value;
 
+use crate::gateway::dispatch_data::basic::SessionReplaceData;
+use crate::gateway::dispatch_data::message::MessageReactData;
+use crate::gateway::dispatch_data::ready::ReadyData;
 use crate::gateway::{
     dispatch_data::{
         guild::{GuildCreateData, GuildDeleteData},
@@ -17,6 +21,7 @@ pub struct ReceiveData {
 pub enum ReceiveDataType {
     OP0(Box<DispatchEvent>),
     OP1(Option<u32>),
+    OP9(bool),
     OP10(OP10D),
     OP11,
 }
@@ -36,7 +41,9 @@ impl<'de> Deserialize<'de> for ReceiveData {
         let d = match op {
             0 => {
                 let dispatch_event = match value["t"].as_str().unwrap() {
-                    "READY" => DispatchEvent::Ready,
+                    "READY" => DispatchEvent::Ready(
+                        ReadyData::deserialize(&value["d"]).map_err(de::Error::custom)?,
+                    ),
                     "GUILD_DELETE" => DispatchEvent::GuildDelete(
                         GuildDeleteData::deserialize(&value["d"]).map_err(de::Error::custom)?,
                     ),
@@ -49,11 +56,24 @@ impl<'de> Deserialize<'de> for ReceiveData {
                     "MESSAGE_DELETE" => DispatchEvent::MessageDelete(
                         MessageEventData::deserialize(&value["d"]).map_err(de::Error::custom)?,
                     ),
+                    "MESSAGE_UPDATE" => DispatchEvent::MessageUpdate(
+                        MessageEventData::deserialize(&value["d"]).map_err(de::Error::custom)?,
+                    ),
                     "TYPING_START" => DispatchEvent::TypingStart(
                         TypingEventData::deserialize(&value["d"]).map_err(de::Error::custom)?,
                     ),
                     "TYPING_STOP" => DispatchEvent::TypingStop(
                         TypingEventData::deserialize(&value["d"]).map_err(de::Error::custom)?,
+                    ),
+                    "MESSAGE_REACTION_ADD" => DispatchEvent::ReactionAdd(
+                        MessageReactData::deserialize(&value["d"]).map_err(de::Error::custom)?,
+                    ),
+                    "MESSAGE_REACTION_REMOVE" => DispatchEvent::ReactionRemove(
+                        MessageReactData::deserialize(&value["d"]).map_err(de::Error::custom)?,
+                    ),
+                    "SESSION_REPLACE" => DispatchEvent::SessionReplace(
+                        Vec::<SessionReplaceData>::deserialize(&value["d"])
+                            .map_err(de::Error::custom)?,
                     ),
                     _ => panic!("Unimplemented dispatch event: {}", value),
                 };
@@ -63,6 +83,10 @@ impl<'de> Deserialize<'de> for ReceiveData {
                 let inner: Option<u32> =
                     Option::deserialize(&value["d"]).map_err(de::Error::custom)?;
                 ReceiveDataType::OP1(inner)
+            }
+            9 => {
+                let inner = bool::deserialize(&value["d"]).map_err(de::Error::custom)?;
+                ReceiveDataType::OP9(inner)
             }
             10 => {
                 let inner = OP10D::deserialize(&value["d"]).map_err(de::Error::custom)?;

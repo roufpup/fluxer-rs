@@ -1,4 +1,5 @@
-use fluxer_rs::{FluxerBot, gateway::op_handlers::dispatch::DispatchHandler};
+use fluxer_rs::fluxerbot::FluxerBot;
+use fluxer_rs::gateway::op_handlers::dispatch::DispatchHandler;
 
 #[tokio::main]
 async fn main() {

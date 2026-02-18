@@ -1,4 +1,4 @@
-use crate::gateway::dispatch_data::types::{Channel, Member, Properties, Role};
+use crate::gateway::dispatch_data::types::{Channel, Member, GuildProperties, Role};
 use serde::Deserialize;
 use serde_json::Value;
 
@@ -19,7 +19,7 @@ pub struct GuildCreateData {
     pub members: Vec<Member>,
     pub online_count: i64,
     pub presences: Vec<Value>,
-    pub properties: Properties,
+    pub properties: GuildProperties,
     pub roles: Vec<Role>,
     pub stickers: Vec<Value>,
     pub voice_states: Vec<Value>,

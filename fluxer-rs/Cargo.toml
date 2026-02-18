@@ -1,6 +1,6 @@
 [package]
 name = "fluxer-rs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "MIT"
 description = "A rust implementation of the fluxer api to be used on fluxer.app and other self hosted instances"

@@ -49,7 +49,7 @@ pub struct User {
 }
 
 #[derive(Deserialize)]
-pub struct Properties {
+pub struct GuildProperties {
     pub afk_channel_id: Value,
     pub afk_timeout: i64,
     pub banner: Value,
@@ -102,3 +102,10 @@ pub struct Author {
     pub id: String,
     pub username: String,
 }
+
+#[derive(Deserialize)]
+pub struct Emoji {
+    pub name: String,
+}
+
+
