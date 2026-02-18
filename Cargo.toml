@@ -1,0 +1,21 @@
+[package]
+name = "colorbot"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+resolver = "3"
+members = ["fluxer-rs"]
+
+
+[dependencies]
+env_logger = "0.11.9"
+log = "0.4.29"
+
+[dependencies.fluxer-rs]
+version = "*"
+path = "fluxer-rs"
+
+[dependencies.tokio]
+version = "1.49.0"
+features = ["rt-multi-thread", "macros"]
