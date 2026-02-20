@@ -1,21 +1,35 @@
 [package]
-name = "colorbot"
-version = "0.1.0"
+name = "fluxer-rs"
+version = "0.1.2"
 edition = "2024"
+license = "MIT"
+description = "A rust implementation of the fluxer api to be used on fluxer.app and other self hosted instances"
+homepage = "https://git.killuaa.dev/roufpup/fluxer-rs"
+repository = "https://git.killuaa.dev/roufpup/fluxer-rs"
+readme = "README.md"
 
 [workspace]
-resolver = "3"
-members = ["fluxer-rs"]
-
+members = [
+    "examples/examplebot",
+]
 
 [dependencies]
-env_logger = "0.11.9"
+async-trait = "0.1.89"
+derive_builder = "0.20.2"
+image = "0.25.9"
 log = "0.4.29"
+minreq = { version = "2.14.1", features = ["https"] }
+serde_json = "1.0.149"
+serde_with = "3.16.1"
 
-[dependencies.fluxer-rs]
-version = "*"
-path = "fluxer-rs"
+[dependencies.ezsockets]
+version = "0.7.1"
+features = ["rustls"]
 
 [dependencies.tokio]
 version = "1.49.0"
 features = ["rt-multi-thread", "macros"]
+
+[dependencies.serde]
+version = "1.0.228"
+features = ["derive"]
