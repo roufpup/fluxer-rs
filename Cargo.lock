@@ -1060,7 +1060,7 @@ dependencies = [
  "derive_builder",
  "emojis",
  "ezsockets",
- "fluxer-rs-macros 0.1.0 (git+https://git.awoo.ren/roufpup/fluxer-rs)",
+ "fluxer-rs-macros",
  "log",
  "reqwest",
  "serde",
@@ -1073,18 +1073,6 @@ dependencies = [
 [[package]]
 name = "fluxer-rs-macros"
 version = "0.1.0"
-dependencies = [
- "heck",
- "log",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
-
-[[package]]
-name = "fluxer-rs-macros"
-version = "0.1.0"
-source = "git+https://git.awoo.ren/roufpup/fluxer-rs#72e6ffe1d786eabeddf47a9f04b66e2f2d30e155"
 dependencies = [
  "heck",
  "log",
