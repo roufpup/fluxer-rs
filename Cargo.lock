@@ -526,19 +526,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
 
 [[package]]
-name = "colorbot"
-version = "0.1.0"
-dependencies = [
- "env_logger",
- "fluxer-rs",
- "image",
- "log",
- "minreq",
- "tokio",
- "turso",
-]
-
-[[package]]
 name = "colorchoice"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -940,6 +927,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0206175f82b8d6bf6652ff7d71a1e27fd2e4efde587fd368662814d6ec1d9ce0"
 
 [[package]]
+name = "example-bot"
+version = "0.1.0"
+dependencies = [
+ "env_logger",
+ "fluxer-rs",
+ "image",
+ "log",
+ "minreq",
+ "tokio",
+ "turso",
+]
+
+[[package]]
 name = "exr"
 version = "1.74.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1060,14 +1060,37 @@ dependencies = [
  "derive_builder",
  "emojis",
  "ezsockets",
+ "fluxer-rs-macros 0.1.0 (git+https://git.awoo.ren/roufpup/fluxer-rs)",
  "log",
- "macros",
  "reqwest",
  "serde",
  "serde_json",
  "serde_with",
  "thiserror 2.0.18",
  "tokio",
+]
+
+[[package]]
+name = "fluxer-rs-macros"
+version = "0.1.0"
+dependencies = [
+ "heck",
+ "log",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "fluxer-rs-macros"
+version = "0.1.0"
+source = "git+https://git.awoo.ren/roufpup/fluxer-rs#72e6ffe1d786eabeddf47a9f04b66e2f2d30e155"
+dependencies = [
+ "heck",
+ "log",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
 ]
 
 [[package]]
@@ -1959,17 +1982,6 @@ name = "lru-slab"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "112b39cec0b298b6c1999fee3e31427f74f676e4cb9879ed1a121b43661a4154"
-
-[[package]]
-name = "macros"
-version = "0.1.0"
-dependencies = [
- "heck",
- "log",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
-]
 
 [[package]]
 name = "matchers"

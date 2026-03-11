@@ -1,5 +1,5 @@
 [package]
-name = "colorbot"
+name = "example-bot"
 version = "0.1.0"
 edition = "2024"
 

@@ -18,7 +18,7 @@ derive_builder = "0.20.2"
 log = "0.4.29"
 serde_json = "1.0.149"
 serde_with = "3.16.1"
-macros = { path = "./macros" }
+fluxer-rs-macros = { git = "https://git.awoo.ren/roufpup/fluxer-rs", version = "0.1.0" }
 thiserror = "2.0.18"
 reqwest = "0.13.2"
 emojis = "0.8.0"

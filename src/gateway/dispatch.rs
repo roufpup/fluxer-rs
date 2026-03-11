@@ -1,4 +1,4 @@
-use macros::dispatch;
+use fluxer_rs_macros::dispatch;
 
 dispatch!(
     ["READY", ReadyData],
