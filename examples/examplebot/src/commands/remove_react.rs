@@ -1,48 +1,25 @@
-use std::sync::Arc;
-
 use fluxer_rs::{
-    api::data_structure::{message::SendMessageBuilder, reaction::RemoveAllReactionBuilder},
-    fluxerbot::FluxerBot,
-    high_level::command_handler::{CommandHandler, CommandTrait},
+    api::common::{remove_all_emoji_reactions, send_message},
+    command, util::get_emoji,
 };
 
-pub struct RemoveReactCommand {
-    pub bot: Arc<FluxerBot>,
-    pub channel_id: String,
-    pub content: String,
-}
+#[command(RemoveReactCommand)]
+async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
+    let data = feedback.data;
+    let args = &feedback.args;
 
-impl CommandTrait for RemoveReactCommand {
-    async fn execute(&self) {
-        if let Some((_, body)) = CommandHandler::remove_pfx("!", &self.content).await {
-            let body_split = body.split(" ").collect::<Vec<&str>>();
-
-            if body_split.len() != 3 || body.is_empty() {
-                let _ = self.bot.api.execute_call(
-                    SendMessageBuilder::default()
-                        .channel_id(self.channel_id.clone())
-                        .content("Invalid syntax")
-                        .build()
-                        .unwrap(),
-                );
-                return;
-            }
-
-            let _ = self.bot.api.execute_call(
-                RemoveAllReactionBuilder::default()
-                    .channel_id(body_split.first().unwrap().to_string())
-                    .message_id(body_split.get(1).unwrap().to_string())
-                    .emoji(
-                        body_split
-                            .get(2)
-                            .unwrap()
-                            .to_string()
-                            .trim_matches('<')
-                            .trim_matches('>'),
-                    )
-                    .build()
-                    .unwrap(),
-            );
-        }
+    if args.len() != 3 {
+        send_message(api, &data.channel_id, "Invalid syntax").await?;
+        return Ok(());
     }
+
+    remove_all_emoji_reactions(
+        api,
+        args.first().unwrap(),
+        args.get(1).unwrap(),
+        &get_emoji(args.get(2).unwrap()),
+    )
+    .await?;
+
+    Ok(())
 }

@@ -1,5 +1,10 @@
-pub mod gateway;
-pub mod fluxerbot;
 pub mod api;
+pub mod error;
+pub mod fluxerbot;
+pub mod gateway;
 pub mod high_level;
-pub use crate::api::data_structure::embed::*;
+pub mod serde;
+pub mod util;
+
+pub use macros::command;
+pub use macros::register_commands;
